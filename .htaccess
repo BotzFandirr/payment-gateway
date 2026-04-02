@@ -1,0 +1,27 @@
+RewriteEngine On
+Options -Indexes
+
+# ====================================================
+# BAGIAN A: ROUTING KHUSUS API (Payment Gateway)
+# ====================================================
+# Aturan ini memastikan endpoint API tetap aman dan bisa diakses
+RewriteRule ^api/payment/status/([^/]+)$ api/payment/status.php?order_id=$1 [QSA,L]
+RewriteRule ^api/payment/deposit$ api/payment/deposit.php [QSA,L]
+RewriteRule ^api/payment/update-status$ api/payment/update-status.php [QSA,L]
+RewriteRule ^api/payment/callback$ api/payment/callback.php [QSA,L]
+
+# ====================================================
+# BAGIAN B: CLEAN URL GLOBAL (Frontend Dashboard/Login)
+# ====================================================
+
+# B1. Redirect Eksternal (Menghapus .php di URL browser)
+# [PENTING]: Baris kedua (RewriteCond !^/api/) mencegah folder API ikut ter-redirect
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
+RewriteCond %{REQUEST_URI} !^/api/ [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# B2. Rewrite Internal (Memanggil file .php di belakang layar)
+# Mengizinkan pengunjung mengakses domain.com/login (tanpa .php)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [QSA,L]
