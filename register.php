@@ -86,30 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .side-item { display: flex; gap: .7rem; align-items: flex-start; color: #d4d4d8; font-size: .92rem; }
         .side-item i { color: var(--primary); margin-top: .1rem; }
 
-        .password-wrapper { position: relative; }
-        .password-wrapper input { padding-right: 45px; }
-        .toggle-password {
-            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-            cursor: pointer; color: var(--text-muted); font-size: 1.2rem; transition: color 0.3s; z-index: 10;
-        }
-        .toggle-password:hover { color: var(--primary); }
-
-        .meter-wrap { margin-top: .6rem; }
-        .meter-bar {
-            height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden;
-        }
-        .meter-fill {
-            width: 0%; height: 100%; border-radius: 99px; transition: .2s ease;
-            background: #ef4444;
-        }
-        .meter-label { margin-top: .45rem; font-size: .78rem; color: var(--text-muted); }
-
-        .terms {
-            display: flex; align-items: flex-start; gap: .6rem; font-size: .84rem; color: var(--text-muted);
-            margin-bottom: 1.1rem;
-        }
-        .terms input { margin-top: .2rem; accent-color: var(--primary); }
-
         @media (max-width: 920px) {
             .register-layout { grid-template-columns: 1fr; }
             .register-side { order: 2; }
