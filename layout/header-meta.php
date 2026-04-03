@@ -8,6 +8,8 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fandirr.store/">
-    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?> - Gabung Sekarang!">
+    <?php $metaTitle = isset($pageTitle) && $pageTitle ? $pageTitle : 'Fandirr Pay'; ?>
+    <meta property="og:title" content="<?php echo htmlspecialchars($metaTitle); ?> - Gabung Sekarang!">
     <meta property="og:description" content="Layanan Top Up & PPOB Termurah. Transaksi detik-an, CS Fast Respon. Daftar Gratis!">
-    <meta property="og:image" content="public/img/thumbnail.png"> <link rel="stylesheet" href="public/css/landing.css"> 
+    <meta property="og:image" content="public/img/thumbnail.png">
+    <link rel="stylesheet" href="public/css/landing.css">

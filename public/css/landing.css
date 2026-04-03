@@ -1,0 +1,28 @@
+/* Shared landing/auth helper styles loaded via layout/header-meta.php */
+
+.gradient-text {
+    background: linear-gradient(90deg, #fff, #f0c419);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.highlight-text {
+    color: #f0c419;
+    text-shadow: 0 8px 35px rgba(240, 196, 25, 0.35);
+}
+
+/* Safe defaults for small UI elements used in landing/register pages */
+.hero-badge,
+.brand-chip,
+.testi-card,
+.cta-block {
+    backface-visibility: hidden;
+}
+
+/* Avoid accidental horizontal overflow on narrow screens */
+html,
+body {
+    overflow-x: hidden;
+}
