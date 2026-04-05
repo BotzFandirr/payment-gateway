@@ -35,7 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $apiKey = bin2hex(random_bytes(32));
+        if ($hashedPassword === false) {
+            throw new RuntimeException('Gagal memproses password.');
+        }
+
+        try {
+            $apiKey = bin2hex(random_bytes(32));
+        } catch (Throwable $entropyError) {
+            $fallbackBytes = function_exists('openssl_random_pseudo_bytes')
+                ? openssl_random_pseudo_bytes(32)
+                : false;
+            $apiKey = $fallbackBytes !== false
+                ? bin2hex($fallbackBytes)
+                : hash('sha256', uniqid((string) mt_rand(), true));
+        }
 
         $sql = "INSERT INTO users (user_id, username, password, api_key, role, balance) VALUES (?, ?, ?, ?, 'user', 0)";
         $stmt = $pdo->prepare($sql);
@@ -50,6 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Database Error: ' . $e->getMessage()]);
         }
+        exit;
+    } catch (Throwable $e) {
+        echo json_encode(['status' => 'error', 'message' => 'Terjadi kesalahan sistem. Silakan coba lagi.']);
         exit;
     }
 }
@@ -246,9 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             modalLoading.classList.add('active');
             const formData = new FormData(this);
-            const submitUrl = window.location.pathname && window.location.pathname !== '/'
-                ? window.location.pathname
-                : 'register.php';
+            const submitUrl = new URL('register.php', window.location.href).toString();
 
             try {
                 const response = await fetch(submitUrl, {
