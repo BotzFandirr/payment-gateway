@@ -262,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             modalLoading.classList.add('active');
             const formData = new FormData(this);
-            const submitUrl = new URL('register.php', window.location.href).toString();
+            const submitUrl = window.location.href.split('#')[0];
 
             try {
                 const response = await fetch(submitUrl, {
@@ -277,7 +277,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 try {
                     data = JSON.parse(rawResponse);
                 } catch (parseErr) {
-                    throw new Error(rawResponse.slice(0, 200) || 'Respons server bukan JSON.');
+                    const looksLikeHtml = /^\s*<!doctype html>|^\s*<html/i.test(rawResponse);
+                    if (looksLikeHtml) {
+                        throw new Error('Endpoint register merespons halaman HTML, bukan JSON. Periksa rewrite/redirect route register.');
+                    }
+                    throw new Error(rawResponse.slice(0, 140) || 'Respons server bukan JSON.');
                 }
 
                 setTimeout(() => {
