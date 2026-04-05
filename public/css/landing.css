@@ -29,19 +29,30 @@ body {
 
 /* Register page shared controls */
 .password-wrapper { position: relative; }
-.password-wrapper input { padding-right: 45px; }
+.password-wrapper input { padding-right: 54px; }
 .toggle-password {
     position: absolute;
-    right: 15px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     cursor: pointer;
     color: var(--text-muted);
-    font-size: 1.2rem;
-    transition: color 0.3s;
+    font-size: 1.05rem;
+    transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
     z-index: 10;
 }
-.toggle-password:hover { color: var(--primary); }
+.toggle-password:hover {
+    color: var(--primary);
+    background: rgba(240, 196, 25, 0.12);
+    border-color: rgba(240, 196, 25, 0.45);
+}
 
 .meter-wrap { margin-top: .6rem; }
 .meter-bar {
@@ -58,6 +69,11 @@ body {
     background: #ef4444;
 }
 .meter-label { margin-top: .45rem; font-size: .78rem; color: var(--text-muted); }
+.meter-label.weak { color: #f87171; }
+.meter-label.fair { color: #fb923c; }
+.meter-label.medium { color: #facc15; }
+.meter-label.strong { color: #4ade80; }
+.meter-label.very-strong { color: #34d399; }
 
 .terms {
     display: flex;

@@ -233,15 +233,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (/[^A-Za-z0-9]/.test(value)) score++;
 
             const map = [
-                {w: 10, c: '#ef4444', t: 'Lemah'},
-                {w: 30, c: '#f97316', t: 'Cukup'},
-                {w: 55, c: '#eab308', t: 'Menengah'},
-                {w: 80, c: '#22c55e', t: 'Kuat'},
-                {w: 100, c: '#10b981', t: 'Sangat Kuat'}
+                {w: 10, c: '#ef4444', t: 'Lemah', cls: 'weak'},
+                {w: 30, c: '#f97316', t: 'Cukup', cls: 'fair'},
+                {w: 55, c: '#eab308', t: 'Menengah', cls: 'medium'},
+                {w: 80, c: '#22c55e', t: 'Kuat', cls: 'strong'},
+                {w: 100, c: '#10b981', t: 'Sangat Kuat', cls: 'very-strong'}
             ][score];
 
             fill.style.width = map.w + '%';
             fill.style.background = map.c;
+            fill.style.boxShadow = `0 0 16px ${map.c}55`;
+            label.className = 'meter-label ' + map.cls;
             label.textContent = 'Kekuatan password: ' + map.t;
         }
 
